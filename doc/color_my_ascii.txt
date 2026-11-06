@@ -52,7 +52,7 @@ Features:~
 ==============================================================================
 2. REQUIREMENTS                                 *color_my_ascii-requirements*
 
-  • Neovim >= 0.10
+  • Neovim >= 0.11
   • lib.nvim (github.com/WKDSteve/lib.nvim) - required, not optional:
     the commands, keymaps, autocommands and notifications are built on it,
     and every module requires it at the top level

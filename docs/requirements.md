@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| Neovim | **0.10+** |
+| Neovim | **0.11+** |
 | [lib.nvim](https://github.com/WKDSteve/lib.nvim) | required — the `:ColorMyAscii` and `:Fence` command trees are built on it |
 
 Optional, each detected at runtime and degrading to nothing when absent:
