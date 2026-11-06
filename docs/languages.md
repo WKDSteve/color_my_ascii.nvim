@@ -68,8 +68,44 @@ endfunction
 ````
 
 See [config/DEFAULTS.lua](../lua/color_my_ascii/config/DEFAULTS.lua) for the
-full default map (aliases like `sh`/`py`/`ts`/`rs`/`kt`/`cs` included). Add or
-override entries in your own setup:
+full default map (aliases like `sh`/`py`/`ts`/`rs`/`kt`/`cs` included). The
+default `fence_language_map`, by language:
+
+| Language | Fence tags |
+|---|---|
+| `vim` | `vim`, `vimscript`, `viml` |
+| `bash` | `bash`, `sh`, `shell`, `zsh` |
+| `c` | `c` |
+| `cpp` | `cpp`, `c++` |
+| `csharp` | `csharp`, `c#`, `cs` |
+| `lua` | `lua` |
+| `python` | `python`, `py` |
+| `ruby` | `ruby`, `rb` |
+| `php` | `php` |
+| `perl` | `perl`, `pl` |
+| `java` | `java` |
+| `kotlin` | `kotlin`, `kt` |
+| `scala` | `scala` |
+| `groovy` | `groovy` |
+| `clojure` | `clojure`, `clj` |
+| `javascript` | `javascript`, `js` |
+| `typescript` | `typescript`, `ts` |
+| `html` | `html` |
+| `css` | `css` |
+| `json` | `json` |
+| `go` | `go`, `golang` |
+| `rust` | `rust`, `rs` |
+| `zig` | `zig` |
+| `swift` | `swift` |
+| `dart` | `dart` |
+| `elixir` | `elixir`, `ex` |
+| `haskell` | `haskell`, `hs` |
+| `r` | `r` |
+| `sql` | `sql` |
+| `powershell` | `powershell`, `ps1` |
+| `llvm` | `llvm` |
+
+Add or override entries in your own setup:
 
 ````lua
 require('color_my_ascii').setup({
