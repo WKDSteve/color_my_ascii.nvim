@@ -147,6 +147,33 @@ return function(H)
     'late answer: the moved block is not replaced by the link'
   )
 
+  -- A late 'No': nothing is written and the block stays as it was.
+  local buf_no = H.scratch('markdown', {
+    '```javascript',
+    'let late_no = 1;',
+    '```',
+  })
+  api.nvim_win_set_cursor(0, { 2, 0 })
+  local no_cb
+  package.loaded['lib.nvim.ui.dialog'] = {
+    yesno = function(_, _, cb)
+      no_cb = cb
+    end,
+  }
+  package.loaded['color_my_ascii.commands.fence.export'] = nil
+  export = require('color_my_ascii.commands.fence.export')
+  export.run({ existing, '--replace' })
+  package.loaded['lib.nvim.ui.dialog'] = real_dialog
+  ok(no_cb ~= nil, 'late no: the question is open')
+  eq(vim.fn.readfile(existing)[1], 'let late = 1;', 'late no: nothing is written while the question is open')
+  no_cb(false)
+  eq(vim.fn.readfile(existing)[1], 'let late = 1;', 'late no: the file stays untouched')
+  eq(
+    table.concat(api.nvim_buf_get_lines(buf_no, 0, -1, false), '|'),
+    table.concat({ '```javascript', 'let late_no = 1;', '```' }, '|'),
+    'late no: the block is not replaced by the link'
+  )
+
   -- ---- no path given prompts via kit.input(completion="file") -------------
   local buf3 = H.scratch('markdown', {
     '```javascript',
