@@ -3,6 +3,7 @@ return {
   id = 'cma.toggle',
   title = ':ColorMyAscii toggle and toggle buffer',
   task = 'color_my_ascii.nvim/testblatt-bindings-checkliste',
+  minit = 'TESTS/sheets/minit.lua',
   sizes = { { rows = 40, cols = 120 } },
   steps = {
     {

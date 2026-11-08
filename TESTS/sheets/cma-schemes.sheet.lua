@@ -4,6 +4,7 @@ return {
   id = 'cma.schemes',
   title = ':ColorMyAscii schemes list and switch',
   task = 'color_my_ascii.nvim/testblatt-bindings-checkliste',
+  minit = 'TESTS/sheets/minit.lua',
   sizes = { { rows = 40, cols = 120 } },
   steps = {
     { lua = [[dofile(vim.fn.getcwd() .. '/TESTS/sheets/_helpers.lua'); _G.boot({ '```ascii', '+--+', '```' })]] },

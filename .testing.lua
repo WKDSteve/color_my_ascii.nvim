@@ -24,9 +24,9 @@ return {
     deprecation = 'error',
     process_net = 'error',
   },
-  -- sheets_spec.lua runs every test sheet in a child editor of its own (`nvim`); that child loads plugin/ from the
-  -- checkout, whose autodoc generates doc/tags when it is missing, so doc/tags is allowed. Nothing else may be written.
-  guard_allow = { fs = { 'doc/tags' }, spawn = { 'nvim' }, network = {} },
+  -- sheets_spec.lua runs every test sheet in a child editor of its own (`nvim`); the child works on a copy of the
+  -- plugin (TESTS/sheets/minit.lua), so nothing is written into the checkout.
+  guard_allow = { spawn = { 'nvim' } },
   timeouts = { case_ms = 30000, file_ms = 300000 },
   -- gated: a failed conformance check makes `scripts/test.sh conformance` exit 1 (docs/CONFORMANCE.md of testing.nvim)
   conformance = { gate = true },
