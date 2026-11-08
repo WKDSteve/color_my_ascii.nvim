@@ -7,10 +7,10 @@ return {
   plugin = 'color_my_ascii',
   -- How the spec files are run: "auto" = sniffed per file, "h" = on the project's own TESTS/harness.lua,
   -- "script" = a self-running script in its own process.
-  dialect = 'h',
+  dialect = 'auto',
   -- Dependencies (directory names) put on the runtimepath: $<NAME>_DIR, .deps/<name>, ../<name>,
   -- stdpath('data')/lazy/<name>.
-  deps = { 'lib.nvim' },
+  deps = { 'lib.nvim', 'testing.nvim' },
   -- "none" = all specs in one nvim, "file" = one nvim per spec file
   -- (nothing leaks from one file into the next).
   isolated = 'file',
@@ -22,9 +22,12 @@ return {
     scheduled_error = 'error',
     prompt = 'error',
     deprecation = 'error',
+    process_net = 'error',
   },
-  -- No guard_allow: the plugin loader spec runs plugin/ from a temp copy, so nothing in the suite
-  -- writes into the checkout (doc/tags included); the fs guard reports it if that ever changes.
+  -- sheets_spec.lua runs every test sheet in a child editor of its own (`nvim`); that child loads plugin/ from the
+  -- checkout, whose autodoc generates doc/tags when it is missing, so doc/tags is allowed. Nothing else may be written.
+  guard_allow = { fs = { 'doc/tags' }, spawn = { 'nvim' }, network = {} },
+  timeouts = { case_ms = 30000, file_ms = 300000 },
   -- gated: a failed conformance check makes `scripts/test.sh conformance` exit 1 (docs/CONFORMANCE.md of testing.nvim)
   conformance = { gate = true },
 }
