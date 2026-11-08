@@ -1,5 +1,5 @@
 -- TESTS/sheets/minit.lua -- the init of the child editor of every test sheet. Like TESTS/minimal_init.lua, but the
--- plugin itself is a throwaway COPY of lua/ and plugin/ (no doc/): plugin/ regenerates helptags and would write
+-- plugin itself is a throwaway COPY of its runtime directories (lua/, plugin/, ...; no doc/): plugin/ regenerates helptags and would write
 -- doc/tags into the checkout (changing an input of every other spec while the run goes on).
 
 local uv = vim.uv or vim.loop
@@ -20,7 +20,22 @@ local function copy(from, to)
 end
 
 local tmp = vim.fn.tempname()
-copy(root .. '/lua', tmp .. '/lua')
-copy(root .. '/plugin', tmp .. '/plugin')
+-- Every runtime directory the checkout has (not doc/: that is the one a copy must not carry along).
+for _, dir in ipairs({
+  'lua',
+  'plugin',
+  'after',
+  'autoload',
+  'ftplugin',
+  'ftdetect',
+  'indent',
+  'syntax',
+  'queries',
+  'colors',
+}) do
+  if vim.fn.isdirectory(root .. '/' .. dir) == 1 then
+    copy(root .. '/' .. dir, tmp .. '/' .. dir)
+  end
+end
 vim.opt.rtp:remove(root)
 vim.opt.rtp:prepend(tmp)
