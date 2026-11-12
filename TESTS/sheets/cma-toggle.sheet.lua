@@ -1,6 +1,7 @@
 -- Live check: `:ColorMyAscii`, `toggle` (global) and `toggle buffer` switch the highlighting.
 return {
   id = 'cma.toggle',
+  feature = 'cma.toggle',
   title = ':ColorMyAscii toggle and toggle buffer',
   task = 'color_my_ascii.nvim/testblatt-bindings-checkliste',
   minit = 'TESTS/sheets/minit.lua',

@@ -1,6 +1,7 @@
 -- Live check: `:ColorMyAscii hover` shows the highlight info of the character under the cursor.
 return {
   id = 'cma.hover',
+  feature = 'cma.hover',
   title = ':ColorMyAscii hover',
   task = 'color_my_ascii.nvim/testblatt-bindings-checkliste',
   minit = 'TESTS/sheets/minit.lua',

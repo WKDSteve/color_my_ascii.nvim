@@ -1,6 +1,7 @@
 -- Live check: `:ColorMyAscii show-config` and `:ColorMyAscii debug` print their reports.
 return {
   id = 'cma.info',
+  feature = 'cma.reports',
   title = ':ColorMyAscii show-config and debug report',
   task = 'color_my_ascii.nvim/testblatt-bindings-checkliste',
   minit = 'TESTS/sheets/minit.lua',

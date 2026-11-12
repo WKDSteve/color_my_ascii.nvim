@@ -1,6 +1,7 @@
 -- Live check: `:ColorMyAscii fence-jump`, `check-fences` and `ensure-blank-lines` on a real buffer.
 return {
   id = 'cma.fences',
+  feature = 'cma.fence-tools',
   title = ':ColorMyAscii fence-jump, check-fences and ensure-blank-lines',
   task = 'color_my_ascii.nvim/testblatt-bindings-checkliste',
   minit = 'TESTS/sheets/minit.lua',

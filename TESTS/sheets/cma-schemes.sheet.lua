@@ -2,6 +2,7 @@
 -- :ColorMyAscii section of BINDINGS-RUNTIME-CHECKLIST.md). `schemes pick` needs telescope and stays by hand.
 return {
   id = 'cma.schemes',
+  feature = 'cma.schemes',
   title = ':ColorMyAscii schemes list and switch',
   task = 'color_my_ascii.nvim/testblatt-bindings-checkliste',
   minit = 'TESTS/sheets/minit.lua',
