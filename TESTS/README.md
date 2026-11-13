@@ -71,8 +71,9 @@ end
 ```
 
 An assertion that fails raises; testing.nvim catches it, prints `FAIL <spec>`
-with the message, and the process exits non-zero. Specs run in one Neovim
-instance (`isolated = 'none'`), in file-name order, and share global state — so a spec that
+with the message, and the process exits non-zero. Every spec file runs in its own
+Neovim instance (`isolated = 'file'` in `.testing.lua`), so nothing leaks from one
+file into the next. Within a file the cases share global state — so a spec that
 changes the configuration puts it back with `config.setup({})` when it is done,
 and one that creates buffers deletes them.
 
