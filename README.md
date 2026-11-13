@@ -82,3 +82,21 @@ each page answers.
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+
+<!-- connections:begin (written by the app-icons tool of the workshop; change integrations.json there, not this block) -->
+## Connections
+
+![color_my_ascii.nvim: what it uses and what uses it](assets/graphs/color_my_ascii.nvim.png)
+
+**Uses**
+
+- [ui.nvim](https://github.com/WKDSteve/ui.nvim): color_my_ascii.nvim asks for an export path with the kit of ui.nvim (`ui.kit`) when it is installed. ([picture](assets/graphs/pair/color_my_ascii.nvim--ui.nvim.png))
+- [lib.nvim](https://github.com/WKDSteve/lib.nvim): the shared base of the plugins.
+
+**Used by**
+
+- [data.nvim](https://github.com/WKDSteve/data.nvim): data.nvim asks color_my_ascii.nvim for the fenced block under the cursor and takes its language as the data format (`fences.block_at`). ([picture](assets/graphs/pair/data.nvim--color_my_ascii.nvim.png))
+- [gitsuite.nvim](https://github.com/WKDSteve/gitsuite.nvim): The conflict feature of gitsuite.nvim filters out regions inside fenced blocks, using the fences of color_my_ascii.nvim (`color_my_ascii.api.fences`). ([picture](assets/graphs/pair/gitsuite.nvim--color_my_ascii.nvim.png))
+- [markdown.nvim](https://github.com/WKDSteve/markdown.nvim): markdown.nvim lets color_my_ascii.nvim color the fenced code blocks (`fenced_scope.provider = "auto"`) and falls back to its own coloring without it. ([picture](assets/graphs/pair/markdown.nvim--color_my_ascii.nvim.png))
+- [mdview.nvim](https://github.com/WKDSteve/mdview.nvim): mdview.nvim asks color_my_ascii.nvim which fences to color in the preview (`color_my_ascii.fences`). ([picture](assets/graphs/pair/mdview.nvim--color_my_ascii.nvim.png))
+<!-- connections:end -->
