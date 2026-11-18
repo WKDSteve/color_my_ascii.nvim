@@ -308,6 +308,25 @@ return function(H)
   vim.wait(50)
   eq(tags_stamp(), tags_before, "the checkout's doc/tags is neither created nor rewritten by the bootstrap")
 
+  -- The copy had no doc/tags, so the generator made them there. Tags older than a help file
+  -- (doc/ edited in a local checkout, which lazy.nvim never regenerates) are made again.
+  local copy_tags = copy_root .. '/doc/tags'
+  ok(
+    vim.wait(2000, function()
+      return vim.uv.fs_stat(copy_tags) ~= nil
+    end, 10),
+    'missing tags are generated'
+  )
+  vim.uv.fs_utime(copy_tags, 1000000000, 1000000000)
+  ok(pcall(dofile, plugin_dir .. 'color_my_ascii_autodoc.lua'), 'the generator runs again')
+  ok(
+    vim.wait(2000, function()
+      local st = vim.uv.fs_stat(copy_tags)
+      return st ~= nil and st.mtime.sec > 1000000000
+    end, 10),
+    'stale tags (older than a help file) are regenerated'
+  )
+
   vim.g.loaded_color_my_ascii = loaded_before
   vim.o.runtimepath = rtp_before
   vim.fn.delete(copy_root, 'rf')
