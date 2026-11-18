@@ -298,6 +298,10 @@ return function(H)
   eq(vim.g.loaded_color_my_ascii, 1, 'setting the guard flag')
   eq(vim.fn.exists(':ColorMyAscii'), 2, 'registering the user command')
   ok(#vim.api.nvim_get_autocmds({ group = 'ColorMyAscii' }) > 0, 'and the static autocommands')
+  -- It is sourced from the runtimepath, so its doc/ is there already; a `:helptags` per load
+  -- cost ~5 ms and rewrote doc/tags (the autodoc file below covers missing tags).
+  eq(vim.o.runtimepath, rtp_before, 'the bootstrap leaves the runtimepath alone')
+  eq(vim.fn.filereadable(copy_root .. '/doc/tags'), 0, 'and runs no :helptags')
 
   ok(pcall(dofile, plugin_dir .. 'color_my_ascii_autodoc.lua'), 'the helptag generator loads without raising')
   -- The generator schedules its `:helptags`; let it run before looking at the checkout.
