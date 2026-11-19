@@ -1,6 +1,8 @@
 -- TESTS/sheets/minit.lua -- the init of the child editor of every test sheet. Like TESTS/minimal_init.lua, but the
--- plugin itself is a throwaway COPY of its runtime directories (lua/, plugin/, ...; no doc/): plugin/ regenerates helptags and would write
--- doc/tags into the checkout (changing an input of every other spec while the run goes on).
+-- checkout itself is not on the runtimepath: plugin/ regenerates helptags and would write doc/tags into the checkout
+-- (changing an input of every other spec while the run goes on). Its runtime directories (plugin/, ...; no doc/, no
+-- lua/) are a throwaway COPY on the runtimepath instead, and the Lua modules are loaded from the checkout through
+-- package.path: their frames then lie in the checkout's lua/, where `testing perf` finds the spawn sites it reached.
 
 local uv = vim.uv or vim.loop
 local init = dofile(vim.fn.getcwd() .. '/TESTS/minimal_init.lua')
@@ -20,9 +22,8 @@ local function copy(from, to)
 end
 
 local tmp = vim.fn.tempname()
--- Every runtime directory the checkout has (not doc/: that is the one a copy must not carry along).
+-- Every runtime directory the checkout has but doc/ (the one a copy must not carry along) and lua/ (read in place).
 for _, dir in ipairs({
-  'lua',
   'plugin',
   'after',
   'autoload',
@@ -39,3 +40,5 @@ for _, dir in ipairs({
 end
 vim.opt.rtp:remove(root)
 vim.opt.rtp:prepend(tmp)
+-- Nothing on the runtimepath has lua/color_my_ascii, so Neovim's runtimepath loader passes and the path loader finds it.
+package.path = ('%s/lua/?.lua;%s/lua/?/init.lua;'):format(root, root) .. package.path
