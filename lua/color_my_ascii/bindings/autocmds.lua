@@ -5,7 +5,7 @@
 --- See docs/BINDINGS.md for a full cheatsheet of all registered autocommands.
 ---
 --- Re-callable: the `plugin/` bootstrap calls this once with only the default
---- config (before the user's own setup() has necessarily run), so
+--- config (read through config.peek(), so no language table is loaded) (before the user's own setup() has necessarily run), so
 --- lua/color_my_ascii/init.lua's M.setup() calls it again on every setup() -
 --- the augroup is cleared and rebuilt each time, so a user-configured
 --- `comment_ascii.filetypes` list takes effect regardless of load order
@@ -30,7 +30,7 @@ function M.enable()
     desc = 'Setup ASCII art highlighting + :Fence command for markdown files',
   })
 
-  local ca = require('color_my_ascii.config').get().comment_ascii
+  local ca = require('color_my_ascii.config').peek().comment_ascii
   if ca and ca.enable and type(ca.filetypes) == 'table' and #ca.filetypes > 0 then
     autocmd.create({ 'FileType' }, function(args)
       require('color_my_ascii').setup_buffer(args.buf)

@@ -15,9 +15,10 @@ vim.g.loaded_color_my_ascii = 1
 -- missing. A `:helptags` on every load cost ~5 ms per session and rewrote
 -- doc/tags each time.
 
--- Initialize plugin with default config
--- This must happen before any buffer setup
-require('color_my_ascii').setup()
+-- No setup() here. The user's own setup(opts) (lazy.nvim `opts`/`config`) would
+-- repeat it, and it loads every languages/*.lua. Without one, the plugin runs
+-- setup() with defaults on first use (M.ensure_setup(), called by
+-- setup_buffer/highlight_buffer), i.e. when the first markdown buffer opens.
 
 -- Register all user commands
 require('color_my_ascii.bindings.usrcmds').enable()

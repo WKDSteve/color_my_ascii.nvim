@@ -35,11 +35,25 @@ local debounce_manager = require('color_my_ascii.debounce_manager')
 local visible_range = require('color_my_ascii.visible_range')
 local safe_api = require('color_my_ascii.utils.safe_api')
 
+--- True once setup() ran (by the user or by ensure_setup()).
+local setup_done = false
+
+--- Run setup() with defaults unless it already ran. The plugin/ bootstrap no
+--- longer calls setup() eagerly; entry points that need the configured state
+--- call this first.
+---@return nil
+function M.ensure_setup()
+  if not setup_done then
+    M.setup()
+  end
+end
+
 --- Initialize the plugin with user configuration
 ---@param opts? ColorMyAscii.Config User configuration options
 ---@return boolean success True if initialization succeeded
 ---@return string|nil error Error message if initialization failed
 function M.setup(opts)
+  setup_done = true
   -- Safe config setup with error recovery. A failed config.setup must abort
   -- here and report it -- continuing would leave current_config already
   -- replaced (config/init.lua applies it before validating derived data)
@@ -162,6 +176,7 @@ end
 ---@return boolean success True if setup succeeded
 ---@return string|nil error Error message if setup failed
 function M.setup_buffer(bufnr)
+  M.ensure_setup()
   if not state.enabled then
     return false, 'Plugin is disabled'
   end
@@ -221,6 +236,7 @@ end
 ---@return boolean success True if highlighting succeeded
 ---@return string|nil error Error message if highlighting failed
 function M.highlight_buffer(bufnr)
+  M.ensure_setup()
   local cfg = require('color_my_ascii.config').get()
   bufnr = bufnr or api.nvim_get_current_buf()
 

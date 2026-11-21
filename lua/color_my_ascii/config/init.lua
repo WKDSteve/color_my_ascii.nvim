@@ -640,6 +640,24 @@ function M.setup(opts)
   end
 end
 
+--- Whether the config store is built, i.e. the bundled language tables are
+--- loaded. False until the first `get()`/`setup()`.
+---@return boolean
+function M.is_ready()
+  return store ~= nil
+end
+
+--- The effective config if it is built, else the plain DEFAULTS -- without
+--- building the store, so the ~30 language files stay unloaded. For startup
+--- code (plugin/ bootstrap) that only needs flags like `debug_enabled`.
+---@return ColorMyAscii.Config
+function M.peek()
+  if store then
+    return store.get()
+  end
+  return DEFAULTS
+end
+
 --- Get the current configuration.
 ---
 --- Returns the module's live, shared table by reference, not a copy -- this

@@ -155,6 +155,7 @@ Temp files are `vim.fn.tempname()` and are deleted again.
 | `language_detector_spec` | all four detection strategies and their priority order |
 | `cache_manager_spec` | the per-buffer parse cache: four invalidation rules, eviction, statistics, the cleanup timer |
 | `debounce_manager_spec` | adaptive debouncing |
+| `lazy_setup_spec` | the `plugin/` bootstrap loads no language table; the default `setup()` runs lazily, once |
 | `lifecycle_spec` | `setup`, per-buffer attachment, cached highlight passes, teardown through every deletion route, `toggle`, the `plugin/` bootstrap |
 | `toggle_buffer_spec` | the per-buffer switch vs. the global one |
 

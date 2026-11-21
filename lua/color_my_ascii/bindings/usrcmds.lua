@@ -127,7 +127,7 @@ function M.enable()
     },
   }
 
-  if require('color_my_ascii.config').get().debug_enabled then
+  if require('color_my_ascii.config').peek().debug_enabled then
     vim.list_extend(routes, require('color_my_ascii.debug.commands').routes())
   end
 

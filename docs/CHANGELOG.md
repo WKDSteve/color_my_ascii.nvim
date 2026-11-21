@@ -57,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Removed the `custom_groups` option and its `ColorMyAscii.CustomGroup` type from the LuaLS annotations. It was never read anywhere, so setting it had no effect; use `overrides` (character to highlight group) or `languages` instead.
+- `plugin/color_my_ascii.lua` no longer calls `setup()` at load. The 31 `languages/*.lua` are loaded by the first `setup()`: the user's own, or a default one that `ensure_setup()` runs when the first markdown buffer is attached (or `highlight_buffer` is called). So a user `setup(opts)` is no longer preceded by a redundant default one. Startup code reads flags through the new `config.peek()` without building the store.
 - Complete rewrite of fence detection logic using state machine approach
 - Parser now tracks all code blocks but only highlights ASCII blocks
 - Empty fences (```` ``` ````) are now contextually interpreted (opening vs closing)
